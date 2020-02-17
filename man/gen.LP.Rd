@@ -4,16 +4,14 @@
 \alias{gen.LP}
 \title{Generate Line and Plane Example}
 \usage{
-gen.LP(n = 100, shape = 2, scale = 5, sig2 = 0.05)
+gen.LP(n = 100, K = 2, iso.var = 0.1)
 }
 \arguments{
 \item{n}{the number of data points for each line and plane.}
 
-\item{shape}{shape parameter inverse-gamma for sampling variance parameter.}
+\item{K}{the number of mixture components.}
 
-\item{scale}{scale parameter of inverse-gamma for sampling variance parameter.}
-
-\item{sig2}{variance parameter for Gaussian errors in ambient space.}
+\item{iso.var}{degree of isotropic variance.}
 }
 \value{
 a named list containing:\describe{
@@ -23,12 +21,14 @@ a named list containing:\describe{
 }
 \description{
 This function generates a toy example of 'line and plane' data in \eqn{R^3} that 
-data are generated from a mixture of a line (one-dimensional) and a plane (two-dimensional).
+data are generated from a mixture of lines (one-dimensional) planes (two-dimensional).
+When \code{K=2}, it gives one line and one plane. For \code{K>2}, it gives one line, 
+one plane, and \code{K-2} componenets are randomly chosen to be either a line or a plane.
 }
 \examples{
 ## test for visualization
 set.seed(10)
-tester = gen.LP(shape=2, scale=5, sig2=0.05)
+tester = gen.LP(n=100, K=2, iso.var=0.1)
 data   = tester$data
 label  = tester$class
 
@@ -43,5 +43,11 @@ plot(data[,1],data[,2],pch=19,cex=0.5,col=label,main="Axis 1 vs 2")
 plot(data[,1],data[,3],pch=19,cex=0.5,col=label,main="Axis 1 vs 3")
 plot(data[,2],data[,3],pch=19,cex=0.5,col=label,main="Axis 2 vs 3")
 par(opar)
+
+\dontrun{
+## visualize in 3d
+x11()
+scatterplot3d::scatterplot3d(x=data, pch=19, cex.symbols=0.5, color=label)
+}
 
 }

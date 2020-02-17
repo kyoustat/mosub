@@ -1,12 +1,13 @@
 #' Generate Line and Plane Example
 #' 
 #' This function generates a toy example of 'line and plane' data in \eqn{R^3} that 
-#' data are generated from a mixture of a line (one-dimensional) and a plane (two-dimensional).
+#' data are generated from a mixture of lines (one-dimensional) planes (two-dimensional).
+#' When \code{K=2}, it gives one line and one plane. For \code{K>2}, it gives one line, 
+#' one plane, and \code{K-2} componenets are randomly chosen to be either a line or a plane.
 #' 
 #' @param n the number of data points for each line and plane.
-#' @param shape shape parameter inverse-gamma for sampling variance parameter.
-#' @param scale scale parameter of inverse-gamma for sampling variance parameter.
-#' @param sig2 variance parameter for Gaussian errors in ambient space.
+#' @param K the number of mixture components.
+#' @param iso.var degree of isotropic variance.
 #' 
 #' @return a named list containing:\describe{
 #' \item{data}{an \eqn{(2n\times 3)} data matrix.}
@@ -16,7 +17,7 @@
 #' @examples 
 #' ## test for visualization
 #' set.seed(10)
-#' tester = gen.LP(shape=2, scale=5, sig2=0.05)
+#' tester = gen.LP(n=100, K=2, iso.var=0.1)
 #' data   = tester$data
 #' label  = tester$class
 #' 
@@ -32,39 +33,81 @@
 #' plot(data[,2],data[,3],pch=19,cex=0.5,col=label,main="Axis 2 vs 3")
 #' par(opar)
 #' 
+#' \dontrun{
+#' ## visualize in 3d
+#' x11()
+#' scatterplot3d::scatterplot3d(x=data, pch=19, cex.symbols=0.5, color=label)
+#' }
+#' 
 #' @export
-gen.LP <- function(n=100, shape=2, scale=5, sig2=0.05){
+gen.LP <- function(n=100, K=2, iso.var=0.1){
   
-  my.alpha = as.double(shape)
-  my.beta  = as.double(scale)
+  # parameters
+  m=3
+  K=round(K)
+  n=round(n)
+  isotropic.var=as.double(iso.var)
   
-  # draw line
-  U1  = rstiefel::rustiefel(3,1)
-  mu1 = stats::rnorm(1)
-  sig1inv = 1/(stats::rgamma(1, shape=my.alpha, scale=my.beta))
-  theta1  = (diag(3)-(U1%*%t(U1)))%*%(rnorm(3))
-  
-  # draw plane
-  U2 = rstiefel::rustiefel(3,2)
-  mu2 = stats::rnorm(2)
-  sig2inv = diag(1/(stats::rgamma(2, shape=my.alpha, scale=my.beta)))
-  theta2  = (diag(3)-(U2%*%t(U2)))%*%(rnorm(3))
+  k.true= c(1:2)
+  if (K>2){
+    k.true = c(k.true, sample(1:2, size=K-2, replace=TRUE))
+  }
+  k.true = sort(k.true, decreasing = F)
   
   
-  # parameters for generation
-  vec1 = as.vector(U1*mu1)   + as.vector(theta1)
-  vec2 = as.vector(U2%*%mu2) + as.vector(theta2)
   
-  sigma1 = (1/sig1inv - sig2)*(U1%*%t(U1)) + (sig2*diag(3))
-  sigma2 = U2%*%(base::solve(sig2inv)-(sig2*diag(2)))%*%t(U2) + (sig2*diag(3))
+  #J.true=2
+  #Generate the subspaces
+  Utrue.list = list()
+  for(k in 1:K){
+    Utrue.list[[k]] = rstiefel::rustiefel(m=m,R=k.true[k])
+  }
+  NU.true = list()
+  for(k in 1:K){
+    NU.true[[k]]=MASS::Null(Utrue.list[[k]])
+  }
+  PNU.list = list()
+  for(k in 1:K){
+    PNU.list[[k]] = NU.true[[k]]%*%t(NU.true[[k]])
+  }
+  #generate means in subspace coordinates
+  mutrue.list = list()
+  for(k in 1:K){
+    mutrue.list[[k]] = rnorm(k.true[k])
+  }
   
-  # real generation
-  dat1 = mvtnorm::rmvnorm(round(n), mean=vec1, sigma=sigma1)
-  dat2 = mvtnorm::rmvnorm(n, mean=vec2, sigma=sigma2)
+  #generate the residual space noise level
+  phitrue.list = rep(10,K)
+  sigmatrue.list = rep(isotropic.var,K)
+  #generate the subspace variances
+  sigma0.true.list = list()
+  for(k in 1:K){
+    sigma0.true.list[[k]]=runif(k.true[k],isotropic.var,5.1)
+  }
+  Sigma0.true.list = list()
+  for(k in 1:K){
+    Sigma0.true.list[[k]]=diag(sigma0.true.list[[k]],k.true[k])
+  }
+  
+  
+  #generate the euclidean space coordinate mean vector theta
+  theta.true.list = list()
+  for(k in 1:K){
+    theta.true.list[[k]] = PNU.list[[k]]%*%rnorm(m)
+  }
+  X = c()
+  label = c()
+  for(k in 1:K){
+    X = rbind(X,MASS::mvrnorm(n,mu=Utrue.list[[k]]%*%mutrue.list[[k]]+theta.true.list[[k]],
+                              Sigma = sigmatrue.list[k]^2*diag(m)/10+Utrue.list[[k]]%*%(Sigma0.true.list[[k]]-sigmatrue.list[k]*diag(k.true[k]))%*%t(Utrue.list[[k]])))
+    label = c(label, rep(k,n))
+  }
+  # scatterplot3d(x=X[,1], y=X[,2], z=X[,3], pch = 19, color = label)
+  
 
   # return
   output = list()
-  output$data  = rbind(dat1, dat2)
-  output$class = c(rep(1,round(n)),rep(2,n))
+  output$data  = X
+  output$class = label
   return(output)
 }

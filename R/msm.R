@@ -19,9 +19,9 @@
 #' }
 #' 
 #' @examples 
-#' ## test for visualization
+#' ## generate a toy example
 #' set.seed(10)
-#' tester = gen.LP(shape=2, scale=5, sig2=0.05)
+#' tester = gen.LP(n=100, K=2, iso.var=0.1)
 #' data   = tester$data
 #' label  = tester$class
 #' 

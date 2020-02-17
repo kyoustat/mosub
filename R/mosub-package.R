@@ -7,6 +7,7 @@
 #' @aliases mosub-package
 #' @import Rdpack
 #' @import MASS
+#' @importFrom scatterplot3d scatterplot3d
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom rstiefel rustiefel
 #' @importFrom utils packageVersion

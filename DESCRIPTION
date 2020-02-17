@@ -9,7 +9,7 @@ Authors@R: c(person("Brian","St. Thomas",role="aut",email="brian.stthomas@gmail.
              person("Kisung","You", role = c("aut", "cre"), email = "kyoustat@gmail.com"))
 Description: Bayesian model for inferring mixtures of subspaces of different dimensions is presented. 
 License: GPL (>=3)
-Imports: MASS, Rcpp, Rdpack, mvtnorm, rstiefel, stats, utils
+Imports: MASS, Rcpp, Rdpack, mvtnorm, rstiefel, scatterplot3d, stats, utils
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.0.2
 RdMacros: Rdpack
