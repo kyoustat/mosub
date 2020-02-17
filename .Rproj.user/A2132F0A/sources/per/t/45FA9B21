@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581907428688.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "152674667",
+    "id" : "45FA9B21",
+    "lastKnownWriteTime" : 1581917610,
+    "last_content_update" : 1581917610276,
+    "path" : "~/Desktop/mosub/R/msm.R",
+    "project_path" : "R/msm.R",
+    "properties" : {
+        "cursorPosition" : "0,50",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581907143752.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "116699287",
+    "id" : "601E285C",
+    "lastKnownWriteTime" : 1581909011,
+    "last_content_update" : 1581909011904,
+    "path" : "~/Desktop/mosub/R/auxiliary.R",
+    "project_path" : "R/auxiliary.R",
+    "properties" : {
+        "cursorPosition" : "284,59",
+        "scrollLine" : "265",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
