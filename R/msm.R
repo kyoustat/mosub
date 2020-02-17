@@ -9,9 +9,11 @@
 #' @param iter the number of MCMC runs.
 #' @param prop.var proposal variance parameter.
 #' @param temperature temperature value for Gibbs posterior.
+#' @param burn.in burn-in for MCMC runs.
+#' @param thin interval for recording MCMC runs
 #' @param print.progress a logical; \code{TRUE} to show completion of iterations by 10, \code{FALSE} otherwise.
 #' 
-#' @return a length-\code{iter} list whose elements are also lists of following elements: \describe{
+#' @return a list whose elements are also lists of following elements: \describe{
 #' \item{P}{length-\code{K} list of projection matrices.}
 #' \item{U}{length-\code{K} list of orthonormal basis.}
 #' \item{theta}{length-\code{K} list of center locations of each mixture.}
@@ -30,39 +32,41 @@
 #' dat2 = data%*%proj
 #' 
 #' ## run MSM algorithm with K=2, 3, and 4
-#' maxiter = 5000
+#' maxiter = 1000
 #' output2 = msm(data, K=2, iter=maxiter)
 #' output3 = msm(data, K=3, iter=maxiter)
 #' output4 = msm(data, K=4, iter=maxiter)
 #' 
 #' ## extract final clustering information
-#' finc2 = output2[[maxiter]]$cluster
-#' finc3 = output3[[maxiter]]$cluster
-#' finc4 = output4[[maxiter]]$cluster
+#' nrec  = length(output2)
+#' finc2 = output2[[nrec]]$cluster
+#' finc3 = output3[[nrec]]$cluster
+#' finc4 = output4[[nrec]]$cluster
 #' 
 #' ## visualize
 #' opar <- par(mfrow=c(3,4))
-#' plot(dat2[,1],dat2[,2],pch=19,cex=0.5,col=finc2,main="K=2:PCA")
-#' plot(data[,1],data[,2],pch=19,cex=0.5,col=finc2,main="K=2:Axis(1,2)")
-#' plot(data[,1],data[,3],pch=19,cex=0.5,col=finc2,main="K=2:Axis(1,3)")
-#' plot(data[,2],data[,3],pch=19,cex=0.5,col=finc2,main="K=2:Axis(2,3)")
+#' plot(dat2[,1],dat2[,2],pch=19,cex=0.3,col=finc2+1,main="K=2:PCA")
+#' plot(data[,1],data[,2],pch=19,cex=0.3,col=finc2+1,main="K=2:Axis(1,2)")
+#' plot(data[,1],data[,3],pch=19,cex=0.3,col=finc2+1,main="K=2:Axis(1,3)")
+#' plot(data[,2],data[,3],pch=19,cex=0.3,col=finc2+1,main="K=2:Axis(2,3)")
 #' 
-#' plot(dat2[,1],dat2[,2],pch=19,cex=0.5,col=finc3,main="K=3:PCA")
-#' plot(data[,1],data[,2],pch=19,cex=0.5,col=finc3,main="K=3:Axis(1,2)")
-#' plot(data[,1],data[,3],pch=19,cex=0.5,col=finc3,main="K=3:Axis(1,3)")
-#' plot(data[,2],data[,3],pch=19,cex=0.5,col=finc3,main="K=3:Axis(2,3)")
+#' plot(dat2[,1],dat2[,2],pch=19,cex=0.3,col=finc3+1,main="K=3:PCA")
+#' plot(data[,1],data[,2],pch=19,cex=0.3,col=finc3+1,main="K=3:Axis(1,2)")
+#' plot(data[,1],data[,3],pch=19,cex=0.3,col=finc3+1,main="K=3:Axis(1,3)")
+#' plot(data[,2],data[,3],pch=19,cex=0.3,col=finc3+1,main="K=3:Axis(2,3)")
 #' 
-#' plot(dat2[,1],dat2[,2],pch=19,cex=0.5,col=finc4,main="K=4:PCA")
-#' plot(data[,1],data[,2],pch=19,cex=0.5,col=finc4,main="K=4:Axis(1,2)")
-#' plot(data[,1],data[,3],pch=19,cex=0.5,col=finc4,main="K=4:Axis(1,3)")
-#' plot(data[,2],data[,3],pch=19,cex=0.5,col=finc4,main="K=4:Axis(2,3)")
+#' plot(dat2[,1],dat2[,2],pch=19,cex=0.3,col=finc4+1,main="K=4:PCA")
+#' plot(data[,1],data[,2],pch=19,cex=0.3,col=finc4+1,main="K=4:Axis(1,2)")
+#' plot(data[,1],data[,3],pch=19,cex=0.3,col=finc4+1,main="K=4:Axis(1,3)")
+#' plot(data[,2],data[,3],pch=19,cex=0.3,col=finc4+1,main="K=4:Axis(2,3)")
 #' par(opar)
 #' 
 #' @references 
 #' \insertRef{thomas_learning_2015}{mosub}
 #' 
 #' @export
-msm <- function(X, K=2, iter=496, prop.var = 1.0, temperature=1e-6, print.progress=TRUE){
+msm <- function(X, K=2, iter=496, prop.var = 1.0, temperature=1e-6, 
+                burn.in = round(iter/2), thin = 10, print.progress=TRUE){
   # MY ADDITION
   m = ncol(X)
   n = nrow(X)
@@ -283,5 +287,6 @@ msm <- function(X, K=2, iter=496, prop.var = 1.0, temperature=1e-6, print.progre
     iterate$cluster = record.clus[[i]]
     output[[i]] = iterate
   }
-  return(output)
+  recording = seq(from=round(burn.in+1), to=iter, by = round(thin))
+  return(output[recording])
 }

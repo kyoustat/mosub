@@ -10,6 +10,8 @@ msm(
   iter = 496,
   prop.var = 1,
   temperature = 1e-06,
+  burn.in = round(iter/2),
+  thin = 10,
   print.progress = TRUE
 )
 }
@@ -24,10 +26,14 @@ msm(
 
 \item{temperature}{temperature value for Gibbs posterior.}
 
+\item{burn.in}{burn-in for MCMC runs.}
+
+\item{thin}{interval for recording MCMC runs}
+
 \item{print.progress}{a logical; \code{TRUE} to show completion of iterations by 10, \code{FALSE} otherwise.}
 }
 \value{
-a length-\code{iter} list whose elements are also lists of following elements: \describe{
+a list whose elements are also lists of following elements: \describe{
 \item{P}{length-\code{K} list of projection matrices.}
 \item{U}{length-\code{K} list of orthonormal basis.}
 \item{theta}{length-\code{K} list of center locations of each mixture.}
