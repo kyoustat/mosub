@@ -2,6 +2,8 @@
 #' 
 #' This function generates a toy example of 'line and plane' data in \eqn{R^3} that 
 #' data are generated from a mixture of lines (one-dimensional) planes (two-dimensional).
+#' When \code{K=2}, it gives one line and one plane. For \code{K>2}, it gives one line, 
+#' one plane, and \code{K-2} componenets are randomly chosen to be either a line or a plane.
 #' 
 #' @param n the number of data points for each line and plane.
 #' @param K the number of mixture components.

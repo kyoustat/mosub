@@ -1,6 +1,6 @@
 #' Learning Mixtures of Subspaces
 #' 
-#' This is still developemental.
+#' Bayesian model for inferring mixtures of subspaces of different dimensions is presented. 
 #' 
 #' @docType package
 #' @name mosub

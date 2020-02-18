@@ -6,5 +6,5 @@
 \alias{mosub-package}
 \title{Learning Mixtures of Subspaces}
 \description{
-This is still developemental.
+Bayesian model for inferring mixtures of subspaces of different dimensions is presented.
 }
