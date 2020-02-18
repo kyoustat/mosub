@@ -2,6 +2,7 @@
 
 export(gen.LP)
 export(msm)
+export(msmpred)
 import(MASS)
 import(Rdpack)
 import(stats)

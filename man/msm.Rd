@@ -57,32 +57,33 @@ proj = base::eigen(stats::cov(data))$vectors[,1:2]
 dat2 = data\%*\%proj
 
 ## run MSM algorithm with K=2, 3, and 4
-maxiter = 5000
+maxiter = 1000
 output2 = msm(data, K=2, iter=maxiter)
 output3 = msm(data, K=3, iter=maxiter)
 output4 = msm(data, K=4, iter=maxiter)
 
 ## extract final clustering information
-finc2 = output2[[maxiter]]$cluster
-finc3 = output3[[maxiter]]$cluster
-finc4 = output4[[maxiter]]$cluster
+nrec  = length(output2)
+finc2 = output2[[nrec]]$cluster
+finc3 = output3[[nrec]]$cluster
+finc4 = output4[[nrec]]$cluster
 
 ## visualize
 opar <- par(mfrow=c(3,4))
-plot(dat2[,1],dat2[,2],pch=19,cex=0.5,col=finc2,main="K=2:PCA")
-plot(data[,1],data[,2],pch=19,cex=0.5,col=finc2,main="K=2:Axis(1,2)")
-plot(data[,1],data[,3],pch=19,cex=0.5,col=finc2,main="K=2:Axis(1,3)")
-plot(data[,2],data[,3],pch=19,cex=0.5,col=finc2,main="K=2:Axis(2,3)")
+plot(dat2[,1],dat2[,2],pch=19,cex=0.3,col=finc2+1,main="K=2:PCA")
+plot(data[,1],data[,2],pch=19,cex=0.3,col=finc2+1,main="K=2:Axis(1,2)")
+plot(data[,1],data[,3],pch=19,cex=0.3,col=finc2+1,main="K=2:Axis(1,3)")
+plot(data[,2],data[,3],pch=19,cex=0.3,col=finc2+1,main="K=2:Axis(2,3)")
 
-plot(dat2[,1],dat2[,2],pch=19,cex=0.5,col=finc3,main="K=3:PCA")
-plot(data[,1],data[,2],pch=19,cex=0.5,col=finc3,main="K=3:Axis(1,2)")
-plot(data[,1],data[,3],pch=19,cex=0.5,col=finc3,main="K=3:Axis(1,3)")
-plot(data[,2],data[,3],pch=19,cex=0.5,col=finc3,main="K=3:Axis(2,3)")
+plot(dat2[,1],dat2[,2],pch=19,cex=0.3,col=finc3+1,main="K=3:PCA")
+plot(data[,1],data[,2],pch=19,cex=0.3,col=finc3+1,main="K=3:Axis(1,2)")
+plot(data[,1],data[,3],pch=19,cex=0.3,col=finc3+1,main="K=3:Axis(1,3)")
+plot(data[,2],data[,3],pch=19,cex=0.3,col=finc3+1,main="K=3:Axis(2,3)")
 
-plot(dat2[,1],dat2[,2],pch=19,cex=0.5,col=finc4,main="K=4:PCA")
-plot(data[,1],data[,2],pch=19,cex=0.5,col=finc4,main="K=4:Axis(1,2)")
-plot(data[,1],data[,3],pch=19,cex=0.5,col=finc4,main="K=4:Axis(1,3)")
-plot(data[,2],data[,3],pch=19,cex=0.5,col=finc4,main="K=4:Axis(2,3)")
+plot(dat2[,1],dat2[,2],pch=19,cex=0.3,col=finc4+1,main="K=4:PCA")
+plot(data[,1],data[,2],pch=19,cex=0.3,col=finc4+1,main="K=4:Axis(1,2)")
+plot(data[,1],data[,3],pch=19,cex=0.3,col=finc4+1,main="K=4:Axis(1,3)")
+plot(data[,2],data[,3],pch=19,cex=0.3,col=finc4+1,main="K=4:Axis(2,3)")
 par(opar)
 
 }

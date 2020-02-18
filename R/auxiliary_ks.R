@@ -3,11 +3,11 @@ mygibbs.step.c <- function(wi){
   n = nrow(wi)
   k = ncol(wi)
   
-  iteration = 100000
+  iteration = 1000000
   for (i in 1:iteration){
     labels = rep(0,n)
     for (j in 1:n){
-      labels[j] = sample(1:k, 1, prob = wi[j,])
+      labels[j] = sample(1:k, 1, prob = as.vector(wi[j,]))
     }
     if (length(unique(labels))==k){
       break

@@ -24,7 +24,6 @@ embed = function(P, subspace = F){
   return(p)
 }
 #' @keywords internal
-#' @noRd
 distance = function(U,V,subspace=T){
   #Find distance between m-dimensional subspaces
   m=dim(U)[1];
@@ -224,20 +223,25 @@ gibbs.loss.prj=function(x , P, mu = NULL, subspace = F){
   #between theclosest point on the subspace P and x
   n = dim(x)[1]
   if(subspace==T){
-    P=P%*%P^T
+    # P=P%*%P^T
+    P = P%*%t(P)
   }
   m = dim(P)[1]
   d = sum(diag(P))
   
   if(is.null(mu)){
     mu = rep(0,m)
+  } else {
+    mu = as.vector(mu)
   }
   
   #Find the distance between the projection of the point and the point itself for each 
   #observation
+  PIm  = P-diag(m)
   dist = rep(0, n)
   for(i in 1:n){
-    dist[i] = d*sqrt(sum(m^2*(P%*%(t(x[i,])-mu) - (t(x[i,])-mu))^2))
+    xidiff  = x[i,]-mu
+    dist[i] = d*sqrt(sum(m^2*(as.vector(PIm%*%xidiff))^2))
   }
   
   return(dist)
