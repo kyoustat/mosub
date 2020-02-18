@@ -27,7 +27,7 @@
 #' test.lab = alldat$class[id.test]
 #' 
 #' ## run MSM algorithm with K=2
-#' maxiter   = 20000
+#' maxiter   = 10000
 #' output2   = msm(train.dat, K=2, iter=maxiter)
 #' test.pred = msmpred(test.dat, output2)
 #' 
@@ -36,8 +36,8 @@
 #' tY = test.dat[,3]
 #' 
 #' opar <- par(mfrow=c(1,2))
-#' plot(tX,tY,col=test.lab, pch=19,cex=0.9,main="true label")
-#' plot(tX,tY,col=test.pred,pch=19,cex=0.9,main="predicted label")
+#' plot(tX,tY,col=test.lab, pch=19,cex=0.5,main="true label")
+#' plot(tX,tY,col=test.pred,pch=19,cex=0.5,main="predicted label")
 #' par(opar)
 #' 
 #' @export

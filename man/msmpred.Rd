@@ -47,8 +47,8 @@ tX = test.dat[,2]
 tY = test.dat[,3]
 
 opar <- par(mfrow=c(1,2))
-plot(tX,tY,col=test.lab, pch=19,cex=0.9,main="true label")
-plot(tX,tY,col=test.pred,pch=19,cex=0.9,main="predicted label")
+plot(tX,tY,col=test.lab, pch=19,cex=0.5,main="true label")
+plot(tX,tY,col=test.pred,pch=19,cex=0.5,main="predicted label")
 par(opar)
 
 }
