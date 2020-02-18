@@ -65,7 +65,9 @@ msmpred = function(X, msmoutput, print.progress=TRUE){
   # print(paste("Iteration ", 0," at ", Sys.time()))
   for(i in 1:iterations){
     if(i%%10==0){
-      print(paste('* msmpred : iteration ', i,'/',iterations,' complete at ', Sys.time(),sep=""))
+      if (print.progress){
+        print(paste('* msmpred : iteration ', i,'/',iterations,' complete at ', Sys.time(),sep=""))  
+      }
     }
     subdist.col = 1 #getting pairwise entry for subdist.col 1 first, incrementing from there
     for(j in 1:(K-1)){
