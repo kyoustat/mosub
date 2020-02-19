@@ -2,7 +2,7 @@
 % Please edit documentation in R/msmpred.R
 \name{msmpred}
 \alias{msmpred}
-\title{Predict Class Labels from Mixtures of Subspaces}
+\title{Predict Class Labels for Mixtures of Subspaces}
 \usage{
 msmpred(X, msmoutput, print.progress = TRUE)
 }
@@ -14,7 +14,7 @@ msmpred(X, msmoutput, print.progress = TRUE)
 \item{print.progress}{a logical; \code{TRUE} to show completion of iterations by 10, \code{FALSE} otherwise.}
 }
 \value{
-a length-\code{n} vector of class labels.
+a length-\eqn{n} vector of class labels.
 }
 \description{
 Once the run from main function \code{msm} is done, \code{msmpred} predicts 

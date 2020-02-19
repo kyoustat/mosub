@@ -1,4 +1,4 @@
-#' Predict Class Labels from Mixtures of Subspaces
+#' Predict Class Labels for Mixtures of Subspaces
 #' 
 #' Once the run from main function \code{msm} is done, \code{msmpred} predicts 
 #' the class label for the given data. In this function, there is no need for an user 
@@ -9,7 +9,7 @@
 #' @param msmoutput output of \code{msm} function. 
 #' @param print.progress a logical; \code{TRUE} to show completion of iterations by 10, \code{FALSE} otherwise.
 #' 
-#' @return a length-\code{n} vector of class labels.
+#' @return a length-\eqn{n} vector of class labels.
 #' 
 #' @examples 
 #' ## generate a toy example
