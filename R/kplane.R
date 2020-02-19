@@ -196,7 +196,7 @@ kplane.mygibbs.step.c <- function(wi){
     for (j in 1:n){
       labels[j] = sample(1:k, 1, prob = as.vector(wi[j,]))
     }
-    tbl.lab = table(label)
+    tbl.lab = table(labels)
     if (length(tbl.lab)==k){
       if (all(tbl.lab>1)){
         cflag = FALSE
