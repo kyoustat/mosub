@@ -4,7 +4,7 @@
 \name{mosub}
 \alias{mosub}
 \alias{mosub-package}
-\title{Learning Mixtures of Subspaces}
+\title{Bayesian Mixture of Subspaces of Different Dimensions}
 \description{
 Bayesian model for inferring mixtures of subspaces of different dimensions is presented.
 }

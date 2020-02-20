@@ -1,4 +1,4 @@
-#' Learning Mixtures of Subspaces
+#' Bayesian Mixture of Subspaces of Different Dimensions
 #' 
 #' Bayesian model for inferring mixtures of subspaces of different dimensions is presented. 
 #' 

@@ -2,8 +2,6 @@
 
 export(gen.LP)
 export(gen.LP2)
-export(kplane)
-export(kplanepred)
 export(msm)
 export(msmpred)
 import(MASS)

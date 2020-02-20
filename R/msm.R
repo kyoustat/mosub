@@ -1,4 +1,4 @@
-#' Mixtures of Varying-Dimensional Subspaces Model
+#' Bayesian Mixture of Subspaces of Different Dimensions
 #' 
 #' \code{msm} is a Bayesian model inferring mixtures of subspaces that are of possibly different dimensions. 
 #' For simplicity, this function returns only a handful of information that are most important in 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/msm.R
 \name{msm}
 \alias{msm}
-\title{Mixtures of Varying-Dimensional Subspaces Model}
+\title{Bayesian Mixture of Subspaces of Different Dimensions}
 \usage{
 msm(
   X,
